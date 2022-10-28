@@ -1,0 +1,23 @@
+# ninja log v5
+2	128	1666993202376077000	CMakeFiles/Thread_Learning.dir/src/Exercice_4/Supernova.cpp.o	8733eb0a5cc557a
+2	291	1666993128591122400	CMakeFiles/Thread_Learning.dir/src/Common/String/StringUtils.cpp.o	c2136f75eb6df3b4
+2	697	1666993143649792700	CMakeFiles/Thread_Learning.dir/src/Exercice_2/Phantom.cpp.o	9107da7061c4b781
+1	469	1666993143421152200	CMakeFiles/Thread_Learning.dir/src/Common/IO/Input.cpp.o	6ff8ea096af3e832
+2	638	1666993143590628600	CMakeFiles/Thread_Learning.dir/src/Exercice_3/Tasks.cpp.o	42f1eb5da94a553f
+1	313	1666993235793889500	CMakeFiles/Thread_Learning.dir/src/main.cpp.o	9d3ae034bdd860f0
+2	295	1666993114653057100	CMakeFiles/Thread_Learning.dir/src/Exercice_5/Meteorites.cpp.o	f03759b713ea9b20
+1	510	1666993156533944600	CMakeFiles/Thread_Learning.dir/src/Exercice_3/CLI/CLIManagement.cpp.o	25825d292c4bd675
+1	583	1666993143535473200	CMakeFiles/Thread_Learning.dir/src/Exercice_1/Etoiles.cpp.o	4d69ea54d85daa91
+495	569	1666979759507489700	Thread_Learning	2746ac9f9290a8e8
+0	365	1666957000457701100	CMakeFiles/Thread_Learning.dir/src/Common/Test/Test.cpp.o	99a1ac9085d537a6
+2	642	1666993114999892900	CMakeFiles/Thread_Learning.dir/src/Exercice_3/CLI/Commands.cpp.o	368b0b84cb08e9ea
+1	664	1666948817021172600	CMakeFiles/Thread_Learning.dir/src/Common/Input.cpp.o	4551550da18dc1c0
+0	552	1666527023071504700	CMakeFiles/Thread_Learning.dir/main.cpp.o	ad7a07175feec7de
+2	524	1666994822590939000	CMakeFiles/Thread_Learning.dir/src/Common/IO/Input.cpp.o	6ff8ea096af3e832
+1	530	1666994822596498000	CMakeFiles/Thread_Learning.dir/src/main.cpp.o	9d3ae034bdd860f0
+2	673	1666994822739037300	CMakeFiles/Thread_Learning.dir/src/Exercice_3/Tasks.cpp.o	42f1eb5da94a553f
+2	703	1666994822769290200	CMakeFiles/Thread_Learning.dir/src/Exercice_2/Phantom.cpp.o	9107da7061c4b781
+2	719	1666994822785944800	CMakeFiles/Thread_Learning.dir/src/Exercice_1/Etoiles.cpp.o	4d69ea54d85daa91
+2	792	1666994822858009400	CMakeFiles/Thread_Learning.dir/src/Exercice_3/CLI/CLIManagement.cpp.o	25825d292c4bd675
+525	1171	1666994823236746300	CMakeFiles/Thread_Learning.dir/src/Exercice_3/CLI/Commands.cpp.o	368b0b84cb08e9ea
+1171	1262	1666994823327890800	Thread_Learning	12176840838b7ade
