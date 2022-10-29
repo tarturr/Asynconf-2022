@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 
 namespace Commands
@@ -12,9 +13,39 @@ namespace Commands
         if (sender->has_permission("ajouter"))
         {
             if (args.size() < 3) return false;
+            if (args[1][0] != '"') return false;
 
-            std::string name{ args[0] }, description{ args[1] };
-            std::vector<std::string> usernames { args.begin() + 2, args.end() };
+            std::string name{ args[0] };
+            std::ostringstream description;
+
+            bool is_closed{ false };
+            std::size_t idx{ 1 };
+            for (; idx < args.size() || is_closed; idx++)
+            {
+                std::string word{ args[idx] };
+
+                if (idx == 1)
+                    word = { word.begin() + 1, word.end() };
+                else
+                {
+                    auto last_char{ word.end() - 1 };
+
+                    if (*last_char == '"')
+                    {
+                        word = { word.begin(), last_char };
+                        is_closed = true;
+                        std::cout << "Ok !" << std::endl;
+                    }
+                }
+
+                description << word << " ";
+            }
+
+            if (!is_closed) return false;
+
+            std::cout << "Final description: " << description.str() << std::endl;
+
+            std::vector<std::string> usernames { args.begin() + idx, args.end() };
             std::vector<User*> users{};
 
             for (const auto& username : usernames)
@@ -23,7 +54,7 @@ namespace Commands
                 if (current_user.first != nullptr) users.emplace_back(current_user.first);
             }
 
-            cli->user_tasks.emplace(std::make_unique<Task>(std::move(name), std::move(description)), std::move(users));
+            cli->user_tasks.emplace(std::make_unique<Task>(std::move(name), description.str()), std::move(users));
         }
 
         return true;
@@ -115,6 +146,8 @@ namespace Commands
 
             std::cout << "L'utilisateur \"" << user->name << "\" a bien ete cree." << std::endl;
             cli->users.emplace_back(std::move(user));
+
+            return true;
         }
 
         std::cout << "Seul l'administrateur peut executer cette commande." << std::endl;
@@ -160,6 +193,32 @@ namespace Commands
                 std::cout << "Connexion en cours..." << std::endl;
                 cli->current_user = user.first;
                 std::cout << "Connexion reussie." << std::endl;
+            }
+        }
+
+        return true;
+    }
+
+    bool help(CLI *cli, User *sender, const std::vector<std::string> &args)
+    {
+        if (args.empty())
+        {
+            std::cout << "Voici toutes les commandes qui vous sont disponibles:" << std::endl;
+            for (const auto& cmd : sender->authorized_commands)
+            {
+                std::cout << "- " << cmd->correct_usage << std::endl;
+            }
+        }
+        else
+        {
+            for (const auto& cmd_name : args)
+            {
+                auto command{ cli->find_command(cmd_name) };
+
+                if (command.first != nullptr)
+                {
+                    std::cout << "- " << command.first->correct_usage << std::endl;
+                }
             }
         }
 

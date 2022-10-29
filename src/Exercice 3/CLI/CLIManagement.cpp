@@ -1,6 +1,5 @@
 #include "CLIManagement.hpp"
 #include "Commands.hpp"
-#include "../../Common/IO/Input.hpp"
 
 #include <algorithm>
 #include <memory>
@@ -13,7 +12,7 @@ Command::Command(std::string name, std::string correct_usage, std::function<bool
 }
 
 
-User::User(std::string name, std::array<Command*, 8> authorized_commands) noexcept
+User::User(std::string name, std::array<Command*, 9> authorized_commands) noexcept
         : name(std::move(name)), authorized_commands(authorized_commands)
 {
 }
@@ -55,14 +54,15 @@ std::string Task::state() const noexcept
 CLI::CLI() noexcept
 {
     commands = {
-            std::make_unique<Command>("ajouter", "/ajouter <nom_de_tache> <description> <utilisateur> [autres utilisateurs] : Creer une nouvelle tache.", Commands::add),
+            std::make_unique<Command>("ajouter", "/ajouter <nom_de_tache> \"<description>\" <utilisateur> [autres utilisateurs...] : Creer une nouvelle tache.", Commands::add),
             std::make_unique<Command>("retirer", "/retirer <nom> : Supprimer une tache via son nom.", Commands::remove),
             std::make_unique<Command>("completer", "/completer <nom> : Marquer la tache comme completee.", Commands::complete),
             std::make_unique<Command>("liste", "/liste : Afficher toutes les taches qui vous sont visibles.", Commands::list),
             std::make_unique<Command>("vider", "/vider : Supprimer toutes les taches existantes.", Commands::empty),
-            std::make_unique<Command>("ajouter-compte", "/ajouter-compte <nom_utilisateur> [permissions] : Creer un nouvel utilisateur.", Commands::add_account),
+            std::make_unique<Command>("ajouter-compte", "/ajouter-compte <nom_utilisateur> [permissions...] : Creer un nouvel utilisateur.", Commands::add_account),
             std::make_unique<Command>("supprimer-compte", "/supprimer-compte <nom_utilisateur> : Supprimer un utilisateur existant.", Commands::remove_account),
-            std::make_unique<Command>("connecter", "/connecter <nom_utilisateur> : Se connecter au compte d'un utilisateur.", Commands::connect)
+            std::make_unique<Command>("connecter", "/connecter <nom_utilisateur> : Se connecter au compte d'un utilisateur.", Commands::connect),
+            std::make_unique<Command>("aide", "/aide [commandes...] : Obtenir l'usage des commandes demandees ou de toutes les commandes.", Commands::help)
     };
 
     User admin{ "Administrateur", {} };

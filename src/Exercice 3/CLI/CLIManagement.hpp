@@ -61,12 +61,12 @@ public:
     User& operator=(const User&) = default;
     User& operator=(User&&) = default;
 
-    explicit User(std::string name, std::array<Command*, 8> authorized_commands = {}) noexcept;
+    explicit User(std::string name, std::array<Command*, 9> authorized_commands = {}) noexcept;
 
     bool has_permission(const std::string& command_name) noexcept;
 
     std::string name;
-    std::array<Command*, 8> authorized_commands{};
+    std::array<Command*, 9> authorized_commands{};
 };
 
 
@@ -75,11 +75,11 @@ class CLI
 public:
     CLI() noexcept;
 
-    std::pair<Command*, std::array<std::unique_ptr<Command>, 8>::iterator> find_command(const std::string& commandname) noexcept;
+    std::pair<Command*, std::array<std::unique_ptr<Command>, 9>::iterator> find_command(const std::string& commandname) noexcept;
     std::pair<User*, std::vector<std::unique_ptr<User>>::iterator> find_user(const std::string& username) noexcept;
     std::pair<Task*, std::unordered_map<std::unique_ptr<Task>, std::vector<User*>>::iterator> find_task(const std::string& taskname) noexcept;
 
-    std::array<std::unique_ptr<Command>, 8> commands;
+    std::array<std::unique_ptr<Command>, 9> commands;
     std::vector<std::unique_ptr<User>> users;
     std::unordered_map<std::unique_ptr<Task>, std::vector<User*>> user_tasks;
 

@@ -16,7 +16,8 @@ void third_run()
     std::string command;
     while (IO::input_once(command, quit, cli.current_user->name + ":~$ "))
     {
-        auto cmd{ cli.find_command(command).first };
+        auto args{ StringUtils::split_to(command, ' ') };
+        auto cmd{ cli.find_command(args[0]).first };
 
         if (cmd == nullptr)
         {
@@ -24,7 +25,8 @@ void third_run()
             continue;
         }
 
-        if (!cmd->action(&cli, cli.current_user, { StringUtils::split_to(command, ' ') }))
+        args = { args.begin() + 1, args.end() };
+        if (!cmd->action(&cli, cli.current_user, args))
         {
             std::cout << cmd->correct_usage << '\n' << std::endl;
         }

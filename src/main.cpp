@@ -5,8 +5,8 @@
 
 #include "Exercice 1/Etoiles.hpp"
 #include "Exercice 2/Phantom.hpp"
-#include "Exercice 4/Supernova.hpp"
 #include "Exercice 3/Tasks.hpp"
+#include "Exercice 4/Supernova.hpp"
 
 
 int main()

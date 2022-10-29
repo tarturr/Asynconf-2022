@@ -14,4 +14,5 @@ namespace Commands
     bool add_account(CLI* cli, User* sender, const std::vector<std::string>& args);
     bool remove_account(CLI* cli, User* sender, const std::vector<std::string>& args);
     bool connect(CLI* cli, User* sender, const std::vector<std::string>& args);
+    bool help(CLI* cli, User* sender, const std::vector<std::string>& args);
 }
