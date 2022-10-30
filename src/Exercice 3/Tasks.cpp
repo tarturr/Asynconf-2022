@@ -26,7 +26,7 @@ void third_run()
         }
 
         args = { args.begin() + 1, args.end() };
-        if (!cmd->action(&cli, cli.current_user, args))
+        if (!cmd->action(cli, cli.current_user, args))
         {
             std::cout << cmd->correct_usage << '\n' << std::endl;
         }
