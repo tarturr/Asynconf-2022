@@ -21,11 +21,11 @@ public:
     Command& operator=(const Command&) = default;
     Command& operator=(Command&&) = default;
 
-    Command(std::string name, std::string correct_usage, std::function<bool(CLI*, User*, const std::vector<std::string>&)> action) noexcept;
+    Command(std::string name, std::string correct_usage, std::function<bool(CLI&, User*, const std::vector<std::string>&)> action) noexcept;
 
     std::string name;
     std::string correct_usage;
-    std::function<bool(CLI*, User*, const std::vector<std::string>&)> action;
+    std::function<bool(CLI&, User*, const std::vector<std::string>&)> action;
 };
 
 enum State

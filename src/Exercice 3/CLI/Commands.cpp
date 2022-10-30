@@ -8,7 +8,7 @@
 
 namespace Commands
 {
-    bool add(CLI* cli, User* sender, const std::vector<std::string>& args)
+    bool add(CLI& cli, User* sender, const std::vector<std::string>& args)
     {
         if (sender->has_permission("ajouter"))
         {
@@ -50,37 +50,37 @@ namespace Commands
 
             for (const auto& username : usernames)
             {
-                auto current_user{ cli->find_user(username) };
+                auto current_user{ cli.find_user(username) };
                 if (current_user.first != nullptr) users.emplace_back(current_user.first);
             }
 
-            cli->user_tasks.emplace(std::make_unique<Task>(std::move(name), description.str()), std::move(users));
+            cli.user_tasks.emplace(std::make_unique<Task>(std::move(name), description.str()), std::move(users));
         }
 
         return true;
     }
 
-    bool remove(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool remove(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (sender->has_permission("supprimer"))
         {
             if (args.size() != 1) return false;
-            auto task{ cli->find_task(args[0]) };
+            auto task{ cli.find_task(args[0]) };
 
             if (task.first != nullptr)
-                cli->user_tasks.erase(task.second);
+                cli.user_tasks.erase(task.second);
         }
 
         return true;
     }
 
-    bool complete(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool complete(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (sender->has_permission("completer"))
         {
             if (args.size() != 1) return false;
 
-            auto task{ cli->find_task(args[0]) };
+            auto task{ cli.find_task(args[0]) };
 
             if (task.first != nullptr)
             {
@@ -97,13 +97,13 @@ namespace Commands
         return true;
     }
 
-    bool list(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool list(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (!args.empty()) return false;
 
         std::cout << "Liste des taches et leur statut :" << std::endl;
 
-        for (const auto& user_task : cli->user_tasks)
+        for (const auto& user_task : cli.user_tasks)
         {
             auto users{ user_task.second };
             if (std::find(users.begin(), users.end(), sender) != users.end() || sender->name == "Administrateur")
@@ -116,16 +116,16 @@ namespace Commands
         return true;
     }
 
-    bool empty(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool empty(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (!args.empty()) return false;
 
         std::cout << "Suppression de toutes les taches en cours..." << std::endl;
-        cli->user_tasks.clear();
+        cli.user_tasks.clear();
         std::cout << "Suppression terminee.\n" << std::endl;
     }
 
-    bool add_account(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool add_account(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (sender->name == "Administrateur")
         {
@@ -140,12 +140,12 @@ namespace Commands
 
                 for (const auto& permission : permissions)
                 {
-                    user->authorized_commands[idx] = cli->find_command(permission).first;
+                    user->authorized_commands[idx] = cli.find_command(permission).first;
                 }
             }
 
             std::cout << "L'utilisateur \"" << user->name << "\" a bien ete cree." << std::endl;
-            cli->users.emplace_back(std::move(user));
+            cli.users.emplace_back(std::move(user));
 
             return true;
         }
@@ -154,13 +154,13 @@ namespace Commands
         return true;
     }
 
-    bool remove_account(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool remove_account(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (sender->name == "Administrateur")
         {
             if (args.size() != 1) return false;
 
-            auto user{ cli->find_user(args[0]) };
+            auto user{ cli.find_user(args[0]) };
 
             if (user.first == nullptr)
             {
@@ -168,7 +168,7 @@ namespace Commands
             }
             else
             {
-                cli->users.erase(user.second);
+                cli.users.erase(user.second);
                 std::cout << "L'utilisateur \"" << args[0] << "\" a bien ete supprime." << std::endl;
             }
         }
@@ -176,13 +176,13 @@ namespace Commands
         return true;
     }
 
-    bool connect(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool connect(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (sender->name == "Administrateur")
         {
             if (args.size() != 1) return false;
 
-            auto user{ cli->find_user(args[0]) };
+            auto user{ cli.find_user(args[0]) };
 
             if (user.first == nullptr)
             {
@@ -191,7 +191,7 @@ namespace Commands
             else
             {
                 std::cout << "Connexion en cours..." << std::endl;
-                cli->current_user = user.first;
+                cli.current_user = user.first;
                 std::cout << "Connexion reussie." << std::endl;
             }
         }
@@ -199,7 +199,7 @@ namespace Commands
         return true;
     }
 
-    bool help(CLI *cli, User *sender, const std::vector<std::string> &args)
+    bool help(CLI &cli, User *sender, const std::vector<std::string> &args)
     {
         if (args.empty())
         {
@@ -213,7 +213,7 @@ namespace Commands
         {
             for (const auto& cmd_name : args)
             {
-                auto command{ cli->find_command(cmd_name) };
+                auto command{ cli.find_command(cmd_name) };
 
                 if (command.first != nullptr)
                 {

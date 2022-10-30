@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-Command::Command(std::string name, std::string correct_usage, std::function<bool(CLI*, User*, const std::vector<std::string>&)> action) noexcept
+Command::Command(std::string name, std::string correct_usage, std::function<bool(CLI&, User*, const std::vector<std::string>&)> action) noexcept
         : name(std::move(name)), correct_usage(std::move(correct_usage)), action(std::move(action))
 {
 }
